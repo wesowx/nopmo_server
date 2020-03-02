@@ -80,5 +80,7 @@ app.post('/reset', (req,res) => {
 })
 
 
-// https.createServer(app).listen(8080, () => console.log("started"));
-app.listen(8080, () => console.log('listening on port 8080'));
+app.listen(process.env.PORT || 8080, () => {
+  console.log(`app is running on port ${process.env.PORT}`)
+}
+)
