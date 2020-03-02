@@ -1,0 +1,39 @@
+CREATE SQL DATABASE WITH HEROKU POSTGRES
+
+ISSUES TO ADDRESS:
+
+1. PMO COUNTER AND AUTO-UPDATING IT DAILY (done)
+  -PMO in database are date objects  [COUNTER]
+  -Upon registering -> P/M/O in database initialized e.g. (let p = new Date().getTime())
+  -  -Upon reset, create new date object
+
+  -Front end will do the calculation and display of the days
+  -Math.floor((Date.now() - p)/ 8E)
+
+
+
+2. BCRYPT AND HASHING (done: using SYNC for now, might have to change to async afterwards lookintoit... NO NEED for login table)
+  -DO WE NEED TO CREATE A SEPARATE LOGIN TABLE LIKE SMART-BINO OR IS THE USERS TABLE SUFFICIENT?/
+
+3. DATE OBJECTS WITHIN DATABASE
+  -CURRENTLY IN UTC(?) FORMAT?
+
+
+4. AVG DAYS PER FAP MATH (CURRENTLY MESSY)
+
+
+
+
+
+
+
+
+
+
+ICA calL
+
+CONFIRM DOCUMENTS NEEDED, NEED AUTHORIZATION LETTER?
+
+CAN BOOK APPOINTMENT? NOT FOUND ONLINE
+
+IF CANNOT BOOK, WHAT TIME IS RECOMMENDED? WILL BE PASSING BY EARLY MORNING OR EVENING
