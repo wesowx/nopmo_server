@@ -78,9 +78,9 @@ app.post('/register', (req,res) => {
       username: username,
       name: name,
       password: hashedPassword,
-      p: new Date().getTime(),
-      m: new Date().getTime(),
-      o: new Date().getTime(),
+      p: new Date(),
+      m: new Date(),
+      o: new Date(),
       joined: new Date()
     })
     .then(user => res.json(user[0]))
