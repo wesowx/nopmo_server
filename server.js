@@ -48,7 +48,7 @@ app.post(
         res.status(404).json('no such user');
       }
     })
-    .catch(err => res.status(400).json('wrong credentials'))
+    .catch(err => res.status(400).json(err))
 
 
     // OLD CODE
