@@ -81,7 +81,7 @@ app.post('/register', (req,res) => {
       o: new Date().getTime(),
       joined: new Date()
     })
-    .then(user => res.json[0])
+    .then(user => res.json(user[0]))
     .catch(err => res.status(404).json(err))
   }
 
