@@ -121,7 +121,7 @@ app.post('/reset', (req,res) => {
     db('users')
     .where('username',username)
     .update({
-      p: new Date()
+      p: Date.now()
     })
   }
 
@@ -129,7 +129,7 @@ app.post('/reset', (req,res) => {
     db('users')
     .where('username',username)
     .update({
-      m: new Date()
+      m: Date.now()
     })
   }
 
@@ -137,7 +137,7 @@ app.post('/reset', (req,res) => {
     db('users')
     .where('username',username)
     .update({
-      o: new Date()
+      o: Date.now()
     })
   }
 
