@@ -71,7 +71,7 @@ app.post('/register', (req,res) => {
   } else {
     let hashedPassword = bcrypt.hashSync(password,8);
     db('users')
-    .returning(['*'])
+    .returning('*')
     .insert({
       username: username,
       name: name,
