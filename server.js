@@ -114,26 +114,70 @@ app.post('/register', (req,res) => {
 })
 
 
-// app.post('/reset', (req,res) => {
-//   if (req.body.p) {
-//     db[length-1].p = new Date().getTime();
-//   }
-//   if (req.body.m) {
-//     db[length-1].m = new Date().getTime();
-//   }
-//   if (req.body.o) {
-//     db[length-1].o = new Date().getTime();
-//     db[length-1].fap++
-//   }
-//
-//   res.json(db[length-1]);
-// })
-//
-//
-// app.put('/updaterank', (req,res) => {
-//   db[length-1].rank = req.body.rank;
-//   res.json(db[length-1]);
-// })
+app.post('/reset', (req,res) => {
+  const {p,m,o,username} = req.body;
+
+  if (p) {
+    db('users')
+    .where('username',username)
+    .update({
+      p: new Date()
+    })
+  }
+
+  if (m) {
+    db('users')
+    .where('username',username)
+    .update({
+      m: new Date()
+    })
+  }
+
+  if (o) {
+    db('users')
+    .where('username',username)
+    .update({
+      o: new Date()
+    })
+  }
+
+  db('users')
+  .where('username',username)
+  .then(user => res.json(user[0]))
+  .catch(err => res.status(404).json(err))
+
+  //
+  // if (req.body.p) {
+  //   db[length-1].p = new Date().getTime();
+  // }
+  // if (req.body.m) {
+  //   db[length-1].m = new Date().getTime();
+  // }
+  // if (req.body.o) {
+  //   db[length-1].o = new Date().getTime();
+  //   db[length-1].fap++
+  // }
+  //
+  // res.json(db[length-1]);
+})
+
+
+app.put('/updaterank', (req,res) => {
+  const {rank,username} = req.body;
+
+  db('users')
+  .where('username',username)
+  .update({
+    rank: rank
+  })
+
+  db('users')
+  .where('username',username)
+  .then(user => res.json(user[0]))
+  .catch(err => res.status(404).json(err))
+  // db[length-1].rank = req.body.rank;
+  // res.json(db[length-1]);
+})
 
 
 app.listen(process.env.PORT || 8080, () => {
