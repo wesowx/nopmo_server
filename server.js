@@ -117,27 +117,43 @@ app.post('/register', (req,res) => {
 app.post('/reset', (req,res) => {
   const {p,m,o,username} = req.body;
 
-  if (p === true) {
-    db('users')
-    .where('username',username)
-    .returning('*')
-    .update('p', new Date())
+  const users = db('users').where('username',username).returning('*')
+
+  // if (p) {
+  //   users.update('p', new Date())
+  //   .then(
+  //     () => {if (m) {
+  //       users.update('m', new Date());
+  //     }}
+  //   )
+  //   .then(
+  //     () => {if (o) {
+  //       users.update('o', new Date());
+  //     }}
+  //   )
+  //   .then(user => res.json(user[0]))
+  // } else {
+  //   if (m) {
+  //     users.update('m', new Date())
+  //     .then(
+  //
+  //     )
+  //   }
+  // }
+
+
+  if (p) {
+    users.update('p', new Date())
     .then(user => console.log(user))
   }
 
-  if (m === true) {
-    db('users')
-    .where('username',username)
-    .returning('*')
-    .update('m', new Date())
+  if (m) {
+    users.update('m', new Date())
     .then(user => console.log(user))
   }
 
-  if (o === true) {
-    db('users')
-    .where('username',username)
-    .returning('*')
-    .update('o', new Date())
+  if (o) {
+    users.update('o', new Date())
     .then(user => console.log(user))
   }
 
@@ -165,18 +181,12 @@ app.post('/reset', (req,res) => {
 app.put('/updaterank', (req,res) => {
   const {rank,username} = req.body;
 
-  db('users')
-  .where('username',username)
-  .update({
-    rank: rank
-  })
+  const users = db('users').where('username',username).returning('*')
 
-  db('users')
-  .where('username',username)
+  users.update({rank:rank})
   .then(user => res.json(user[0]))
   .catch(err => res.status(404).json(err))
-  // db[length-1].rank = req.body.rank;
-  // res.json(db[length-1]);
+
 })
 
 
