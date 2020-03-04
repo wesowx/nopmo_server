@@ -121,27 +121,21 @@ app.post('/reset', (req,res) => {
     db('users')
     .where('username',username)
     .returning('*')
-    .update({
-      p: new Date()
-    })
+    .update('p', new Date())
   }
 
   if (m === true) {
     db('users')
     .where('username',username)
     .returning('*')
-    .update({
-      m: new Date()
-    })
+    .update('m', new Date())
   }
 
   if (o === true) {
     db('users')
     .where('username',username)
     .returning('*')
-    .update({
-      o: new Date()
-    })
+    .update('o', new Date())
   }
 
   db('users')
