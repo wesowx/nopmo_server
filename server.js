@@ -141,40 +141,49 @@ app.post('/reset', (req,res) => {
   //   }
   // }
 
+  async function reset() {
+    if (p) {
+      await users.update('p', new Date())
+    }
 
-  if (p) {
-    users.update('p', new Date())
-    .then(user => console.log(user))
+    if (m) {
+      await users.update('m', new Date())
+    }
+
+    if (o) {
+      await users.update('o', new Date())
+    }
+
+    db('users')
+    .where('username',username)
+    .then(user => res.json(user[0]))
+    .catch(err => res.status(404).json(err))
+
   }
 
-  if (m) {
-    users.update('m', new Date())
-    .then(user => console.log(user))
-  }
+  reset();
 
-  if (o) {
-    users.update('o', new Date())
-    .then(user => console.log(user))
-  }
 
-  db('users')
-  .where('username',username)
-  .then(user => res.json(user[0]))
-  .catch(err => res.status(404).json(err))
-
-  //
-  // if (req.body.p) {
-  //   db[length-1].p = new Date().getTime();
-  // }
-  // if (req.body.m) {
-  //   db[length-1].m = new Date().getTime();
-  // }
-  // if (req.body.o) {
-  //   db[length-1].o = new Date().getTime();
-  //   db[length-1].fap++
+  // if (p) {
+  //   users.update('p', new Date())
+  //   .then(user => console.log(user))
   // }
   //
-  // res.json(db[length-1]);
+  // if (m) {
+  //   users.update('m', new Date())
+  //   .then(user => console.log(user))
+  // }
+  //
+  // if (o) {
+  //   users.update('o', new Date())
+  //   .then(user => console.log(user))
+  // }
+  //
+  // db('users')
+  // .where('username',username)
+  // .then(user => res.json(user[0]))
+  // .catch(err => res.status(404).json(err))
+
 })
 
 
