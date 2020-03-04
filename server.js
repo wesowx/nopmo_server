@@ -117,7 +117,7 @@ app.post('/register', (req,res) => {
 app.post('/reset', (req,res) => {
   const {p,m,o,username} = req.body;
 
-  if (p) {
+  if (p === true) {
     db('users')
     .where('username',username)
     .returning('*')
@@ -126,7 +126,7 @@ app.post('/reset', (req,res) => {
     })
   }
 
-  if (m) {
+  if (m === true) {
     db('users')
     .where('username',username)
     .returning('*')
@@ -135,7 +135,7 @@ app.post('/reset', (req,res) => {
     })
   }
 
-  if (o) {
+  if (o === true) {
     db('users')
     .where('username',username)
     .returning('*')
