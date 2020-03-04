@@ -120,6 +120,7 @@ app.post('/reset', (req,res) => {
   if (p) {
     db('users')
     .where('username',username)
+    .returning('*')
     .update({
       p: new Date()
     })
@@ -128,6 +129,7 @@ app.post('/reset', (req,res) => {
   if (m) {
     db('users')
     .where('username',username)
+    .returning('*')
     .update({
       m: new Date()
     })
@@ -136,6 +138,7 @@ app.post('/reset', (req,res) => {
   if (o) {
     db('users')
     .where('username',username)
+    .returning('*')
     .update({
       o: new Date()
     })
