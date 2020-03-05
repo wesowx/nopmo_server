@@ -84,7 +84,7 @@ app.post('/register', (req,res) => {
       joined: new Date()
     })
     .then(user => res.json(user[0]))
-    .catch(err => res.status(404).json("error registering"))
+    .catch(err => res.status(404).json("Username already taken"))
   }
 
 
