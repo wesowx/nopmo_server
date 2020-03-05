@@ -151,7 +151,7 @@ app.post('/reset', (req,res) => {
     }
 
     if (o) {
-      await users.update('o', new Date())
+      await users.update('o', new Date()).increment('fap',1)
     }
 
     db('users')
