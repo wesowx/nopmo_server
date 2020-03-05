@@ -50,7 +50,7 @@ app.post(
         res.status(404).json('no such user');
       }
     })
-    .catch(err => res.status(400).json(err))
+    .catch(err => res.status(400).json('no such user'))
 
 
     // OLD CODE
@@ -84,7 +84,7 @@ app.post('/register', (req,res) => {
       joined: new Date()
     })
     .then(user => res.json(user[0]))
-    .catch(err => res.status(404).json(err))
+    .catch(err => res.status(404).json("error registering"))
   }
 
 
