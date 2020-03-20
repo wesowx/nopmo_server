@@ -129,7 +129,7 @@ app.post('/register', (req,res) => {
 
 
 app.post('/reset', (req,res) => {
-  const {p,m,o,username,currentstreakid, lastrelapse} = req.body;
+  const {p,m,o,username,currentstreakid} = req.body;
 
   const users = db('users').where('username',username).returning('*')
   const logsTable = db('logs').returning('*');
@@ -139,8 +139,6 @@ app.post('/reset', (req,res) => {
 
 
   async function reset() {
-    const getDay = 1 / 8.64e+7;
-
     if (p) {
       await users.update('p', new Date());
       await logsTable.insert({
@@ -173,9 +171,8 @@ app.post('/reset', (req,res) => {
       });
 
       await streak.update({
-        enddate: new Date(),
-        days: Math.floor((new Date() - lastrelapse) * getDay)
-      })
+        enddate: new Date()
+      });
 
       let newStreakId = await streaksTable.insert({
         username: username,
