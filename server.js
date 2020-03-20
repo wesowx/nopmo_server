@@ -70,23 +70,56 @@ app.post(
 app.post('/register', (req,res) => {
   const {name,username,password} = req.body;
 
+  const users = db('users').returning('*');
+  const streaks = db('streaks').returning('*');
+  const user = db('users').where('username',username).returning('*')
+
+
+  async function register() {
+    let hashedPassword = bcrypt.hashSync(password,8);
+
+    try {
+      await users.insert({
+        username: username,
+        name: name,
+        password: hashedPassword,
+        p: new Date(),
+        m: new Date(),
+        o: new Date(),
+        joined: new Date()
+      })
+    } catch(err) {
+      res.status(404).json('Username already taken');
+    }
+
+    await streaks.insert({
+      username: username,
+      streaknumber: 1,
+      startdate: new Date()
+    })
+
+    await res.json(user[0]);
+
+  }
+
   if (!name.length || !username.length || !password.length) {
     res.status(404).json("Do not leave blanks")
   } else {
-    let hashedPassword = bcrypt.hashSync(password,8);
-    db('users')
-    .returning('*')
-    .insert({
-      username: username,
-      name: name,
-      password: hashedPassword,
-      p: new Date(),
-      m: new Date(),
-      o: new Date(),
-      joined: new Date()
-    })
-    .then(user => res.json(user[0]))
-    .catch(err => res.status(404).json("Username already taken"))
+    register();
+    // let hashedPassword = bcrypt.hashSync(password,8);
+    // db('users')
+    // .returning('*')
+    // .insert({
+    //   username: username,
+    //   name: name,
+    //   password: hashedPassword,
+    //   p: new Date(),
+    //   m: new Date(),
+    //   o: new Date(),
+    //   joined: new Date()
+    // })
+    // .then(user => res.json(user[0]))
+    // .catch(err => res.status(404).json("Username already taken"))
   }
 
 
