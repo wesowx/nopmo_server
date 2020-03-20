@@ -93,7 +93,7 @@ app.post('/register', (req,res) => {
         m: new Date(),
         o: new Date(),
         joined: new Date(),
-        currentstreakid: streakid
+        currentstreakid: streakid[0]
       })
     } catch(err) {
       res.status(404).json('Username already taken');
