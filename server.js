@@ -98,7 +98,9 @@ app.post('/register', (req,res) => {
       startdate: new Date()
     })
 
-    await res.json(user[0]);
+    let sendUser = await user;
+
+    await res.json(sendUser[0]);
 
   }
 
