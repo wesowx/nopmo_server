@@ -129,23 +129,62 @@ app.post('/register', (req,res) => {
 
 
 app.post('/reset', (req,res) => {
-  const {p,m,o,username} = req.body;
+  const {p,m,o,username,currentstreakid, lastrelapse} = req.body;
 
   const users = db('users').where('username',username).returning('*')
   const logsTable = db('logs').returning('*');
+  const streaksTable = db('streaks').returning('streakid');
+  const streak = db('streaks').where('streakid',currentstreakid).returning('*')
+
 
 
   async function reset() {
+    const getDay = 1 / 8.64e+7;
+
     if (p) {
-      await users.update('p', new Date())
+      await users.update('p', new Date());
+      await logsTable.insert({
+        streakid: currentstreakid,
+        type: 'reset',
+        date: new Date(),
+        color: 'orange',
+        typeofrelapse: 'p'
+      });
     }
 
     if (m) {
-      await users.update('m', new Date())
+      await users.update('m', new Date());
+      await logsTable.insert({
+        streakid: currentstreakid,
+        type: 'reset',
+        date: new Date(),
+        color: 'red',
+        typeofrelapse: 'm'
+      });
     }
 
     if (o) {
-      await users.update('o', new Date()).increment('fap',1)
+      await logsTable.insert({
+        streakid: currentstreakid,
+        type: 'reset',
+        date: new Date(),
+        color: 'black',
+        typeofrelapse: 'o'
+      });
+
+      await streak.update({
+        enddate: new Date(),
+        days: Math.floor((new Date() - lastrelapse) * getDay)
+      })
+
+      let newStreakId = await streaksTable.insert({
+        username: username,
+        startdate: new Date()
+      })
+      .increment('streaknumber',1);
+
+      await users.update({o:new Date(),currentstreakid:newStreakId[0]}).increment('fap',1);
+
     }
 
     db('users')
