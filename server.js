@@ -71,12 +71,18 @@ app.post('/register', (req,res) => {
   const {name,username,password} = req.body;
 
   const users = db('users').returning('*');
-  const streaks = db('streaks').returning('*');
+  const streaks = db('streaks').returning('streakid');
   const user = db('users').where('username',username).returning('*')
 
 
   async function register() {
     let hashedPassword = bcrypt.hashSync(password,8);
+
+    let streakid = await streaks.insert({
+      username: username,
+      streaknumber: 1,
+      startdate: new Date()
+    })
 
     try {
       await users.insert({
@@ -86,17 +92,12 @@ app.post('/register', (req,res) => {
         p: new Date(),
         m: new Date(),
         o: new Date(),
-        joined: new Date()
+        joined: new Date(),
+        currentstreakid: streakid
       })
     } catch(err) {
       res.status(404).json('Username already taken');
     }
-
-    await streaks.insert({
-      username: username,
-      streaknumber: 1,
-      startdate: new Date()
-    })
 
     let sendUser = await user;
 
@@ -124,30 +125,6 @@ app.post('/register', (req,res) => {
     // .catch(err => res.status(404).json("Username already taken"))
   }
 
-
-  // OLD CODE
-
-  // if (!req.body.name.length || !req.body.username.length || !req.body.password.length) {
-  //   res.status(404).json("Incorrect credentials");
-  // } else {
-  //   let hashedPassword = bcrypt.hashSync(req.body.password, 8);
-  //
-  //   console.log(hashedPassword);
-  //
-  //   db.push({
-  //     id: db[db.length-1].id + 1,
-  //     username: req.body.username,
-  //     name: req.body.name,
-  //     password: hashedPassword,
-  //     p: new Date().getTime(),
-  //     m: new Date().getTime(),
-  //     o: new Date().getTime(),
-  //     fap: 0,
-  //     joined: new Date(),
-  //     rank: 'Fapper'
-  //   });
-  //   res.json(db[db.length-1]);
-  // }
 })
 
 
@@ -155,28 +132,8 @@ app.post('/reset', (req,res) => {
   const {p,m,o,username} = req.body;
 
   const users = db('users').where('username',username).returning('*')
+  const logsTable = db('logs').returning('*');
 
-  // if (p) {
-  //   users.update('p', new Date())
-  //   .then(
-  //     () => {if (m) {
-  //       users.update('m', new Date());
-  //     }}
-  //   )
-  //   .then(
-  //     () => {if (o) {
-  //       users.update('o', new Date());
-  //     }}
-  //   )
-  //   .then(user => res.json(user[0]))
-  // } else {
-  //   if (m) {
-  //     users.update('m', new Date())
-  //     .then(
-  //
-  //     )
-  //   }
-  // }
 
   async function reset() {
     if (p) {
@@ -200,26 +157,6 @@ app.post('/reset', (req,res) => {
 
   reset();
 
-
-  // if (p) {
-  //   users.update('p', new Date())
-  //   .then(user => console.log(user))
-  // }
-  //
-  // if (m) {
-  //   users.update('m', new Date())
-  //   .then(user => console.log(user))
-  // }
-  //
-  // if (o) {
-  //   users.update('o', new Date())
-  //   .then(user => console.log(user))
-  // }
-  //
-  // db('users')
-  // .where('username',username)
-  // .then(user => res.json(user[0]))
-  // .catch(err => res.status(404).json(err))
 
 })
 
