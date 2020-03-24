@@ -161,11 +161,6 @@ app.post('/reset', (req,res) => {
     }
 
     if (o) {
-      let newstreakid = await streaks.insert({
-        username: username,
-        startdate: new Date()
-      })
-
       await logsTable.insert({
         streakid: currentstreakid,
         type: 'reset',
@@ -177,6 +172,11 @@ app.post('/reset', (req,res) => {
       await streak.update({
         enddate: new Date()
       });
+
+      let newstreakid = await streaks.insert({
+        username: username,
+        startdate: new Date()
+      })
 
       await users.update({o:new Date()}).increment('fap',1);
 
