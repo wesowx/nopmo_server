@@ -169,14 +169,14 @@ app.post('/reset', (req,res) => {
         typeofrelapse: 'o'
       });
 
-      await streak.update({
-        enddate: new Date()
-      });
-
       let newstreakid = await streaks.insert({
         username: username,
         startdate: new Date()
       })
+
+      await streak.update({
+        enddate: new Date()
+      });
 
       await users.update({o:new Date()}).increment('fap',1);
 
