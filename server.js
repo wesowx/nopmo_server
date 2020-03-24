@@ -132,7 +132,7 @@ app.post('/reset', (req,res) => {
 
   const users = db('users').where('username',username).returning('*')
   const logsTable = db('logs').returning('*');
-  const streaksTable = db('streaks').returning('streakid');
+  const streaks = db('streaks').returning('streakid');
   const streak = db('streaks').where('streakid',currentstreakid).returning('*')
 
 
@@ -173,10 +173,10 @@ app.post('/reset', (req,res) => {
         enddate: new Date()
       });
 
-      let newStreakId = await streaksTable.insert({
+      let newstreakid = await streaks.insert({
         username: username,
         startdate: new Date()
-      });
+      })
 
       await users.update({o:new Date()}).increment('fap',1);
 
