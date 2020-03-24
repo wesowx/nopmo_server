@@ -193,6 +193,36 @@ app.post('/reset', (req,res) => {
 
   reset();
 
+})
+
+
+app.post('/journal', (req,res) => {
+  const {username,currentstreakid,mood,confidence,cognition,motivation,productivity,writeup} = req.body;
+
+  const logsTable = db('logs').returning('*');
+
+  async function updateJournal() {
+    try {
+      await logsTable.insert({
+        streakid: currentstreakid,
+        type: 'reset',
+        date: new Date(),
+        mood: mood,
+        confidence: confidence,
+        cognition: cognition,
+        motivation: motivation,
+        productivity: productivity,
+        writeup: writeup
+      });
+
+      res.json('success');
+    } catch(err) {
+      res.status(404).json(err);
+    }
+
+  }
+
+  updateJournal();
 
 })
 
