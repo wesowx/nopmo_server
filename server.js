@@ -173,10 +173,10 @@ app.post('/reset', (req,res) => {
         enddate: new Date()
       });
 
-      // let newStreakId = await streaksTable.insert({
-      //   username: username,
-      //   startdate: new Date()
-      // });
+      let newStreakId = await streaksTable.insert({
+        username: username,
+        startdate: new Date()
+      });
 
       await users.update({o:new Date()}).increment('fap',1);
 
