@@ -182,7 +182,7 @@ app.post('/reset', (req,res) => {
         res.status(404).json(err)
       }
 
-      await users.update({o:new Date()}).increment('fap',1);
+      await users.update({o:new Date(),currentstreakid:newstreakid[0]}).increment('fap',1);
 
     }
 
