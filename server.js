@@ -132,8 +132,8 @@ app.post('/reset', (req,res) => {
 
   const users = db('users').where('username',username).returning('*')
   const logsTable = db('logs').returning('*');
+  const streak = db('streaks').where('streakid',currentstreakid).returning('*');
   const streaks = db('streaks').returning('streakid');
-  const streak = db('streaks').where('streakid',currentstreakid).returning('*')
 
 
 
