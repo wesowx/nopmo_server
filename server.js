@@ -178,9 +178,8 @@ app.post('/reset', (req,res) => {
         username: username,
         startdate: new Date()
       })
-      // .increment('streaknumber',1); NOT INCREMENT.. ITS A DIFFERENT ROW....
 
-      await users.update({o:new Date(),currentstreakid:newStreakId[0]}).increment('fap',1);
+      await users.update({o:new Date()}).increment('fap',1);
 
     }
 
