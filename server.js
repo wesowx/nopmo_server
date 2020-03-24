@@ -184,7 +184,7 @@ app.post('/reset', (req,res) => {
 
     }
 
-    db('users')
+    await db('users')
     .where('username',username)
     .then(user => res.json(user[0]))
     .catch(err => res.status(404).json(err))
