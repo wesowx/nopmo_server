@@ -179,7 +179,7 @@ app.post('/reset', (req,res) => {
         startdate: new Date()
       })
 
-      await users.update({o:new Date()}).increment('fap',1);
+      await users.update({o:new Date(),currentstreakid:newStreakId[0]}).increment('fap',1);
 
     }
 
