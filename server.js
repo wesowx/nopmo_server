@@ -80,7 +80,6 @@ app.post('/register', (req,res) => {
 
     let streakid = await streaks.insert({
       username: username,
-      streaknumber: 1,
       startdate: new Date()
     })
 
