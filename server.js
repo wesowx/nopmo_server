@@ -173,10 +173,14 @@ app.post('/reset', (req,res) => {
         enddate: new Date()
       });
 
-      let newstreakid = await streaks.insert({
-        username: username,
-        startdate: new Date()
-      })
+      try {
+        let newstreakid = await streaks.insert({
+          username: username,
+          startdate: new Date()
+        })
+      } catch (err) {
+        res.status(404).json(err)
+      }
 
       await users.update({o:new Date()}).increment('fap',1);
 
