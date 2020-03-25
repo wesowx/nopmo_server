@@ -239,6 +239,20 @@ app.put('/updaterank', (req,res) => {
 })
 
 
+
+
+app.post('/currentstreak', (req,res) => {
+  const {currentstreakid} = req.body;
+
+  const logsTable = db('logs').where('streakid',currentstreakid).returning('*');
+
+  logsTable
+  .then(logs => res.json(logs))
+  .catch(err => res.status(404).json(err));
+  
+})
+
+
 app.listen(process.env.PORT || 8080, () => {
   console.log(`app is running on port ${process.env.PORT}`)
 }
