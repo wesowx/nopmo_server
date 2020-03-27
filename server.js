@@ -205,7 +205,7 @@ app.post('/journal', (req,res) => {
     try {
       await logsTable.insert({
         streakid: currentstreakid,
-        type: 'reset',
+        type: 'journal',
         date: new Date(),
         mood: mood,
         confidence: confidence,
@@ -249,7 +249,7 @@ app.post('/currentstreak', (req,res) => {
   logsTable
   .then(logs => res.json(logs))
   .catch(err => res.status(404).json(err));
-  
+
 })
 
 
