@@ -252,6 +252,18 @@ app.post('/currentstreak', (req,res) => {
 
 })
 
+app.post('/paststreaklist', (req,res) => {
+  const {username} = req.body;
+
+  const pastStreakList = db('streaks').where('username',username).returning('*');
+
+  pastStreakList
+  .then(streaks => res.json(streaks))
+  .catch(err => res.status(404).json(err));
+
+})
+
+
 
 app.listen(process.env.PORT || 8080, () => {
   console.log(`app is running on port ${process.env.PORT}`)
