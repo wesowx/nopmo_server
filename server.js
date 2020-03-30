@@ -252,6 +252,17 @@ app.post('/currentstreak', (req,res) => {
 
 })
 
+app.post('/paststreak', (req,res) => {
+  const {paststreakid} = req.body;
+
+  const logsTable = db('logs').where('streakid',paststreakid).returning('*');
+
+  logsTable
+  .then(logs => res.json(logs))
+  .catch(err => res.status(404).json(err));
+
+})
+
 app.post('/paststreaklist', (req,res) => {
   const {username} = req.body;
 
